@@ -1,0 +1,13 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        post_techno:
+            uri_prefix: /images/technos
+            upload_destination: '%kernel.project_dir%/public/images/technos'
+            namer: Vich\UploaderBundle\Naming\OrignameNamer
+
+#        post_project:
+#            uri_prefix: /images/projects
+#            upload_destination: '%kernel.project_dir%/public/images/projects'
+#            namer: Vich\UploaderBundle\Naming\OrignameNamer

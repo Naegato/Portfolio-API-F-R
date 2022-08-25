@@ -1,0 +1,22 @@
+{
+  "email": {
+    "text" : "",
+    "link" : ""
+  },
+  "tel": {
+    "text" : "",
+    "link" : ""
+  },
+  "location": {
+    "text" : "",
+    "link" : ""
+  },
+  "github": {
+    "text" : "",
+    "link" : ""
+  },
+  "linkedin": {
+    "text" : "",
+    "link" : ""
+  }
+}
