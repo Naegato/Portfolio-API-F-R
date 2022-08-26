@@ -1,46 +1,5 @@
 {
   "name" : "",
   "description" : "",
-  "studies" : [
-    {
-      "school" : "",
-      "formation" : "",
-      "year" : ""
-    },
-    {
-      "school" : "",
-      "formation" : "",
-      "year" : ""
-    }
-  ],
-  "hobbies" : [
-    {
-      "name" : "",
-      "years" : "",
-      "actual" : false
-    },
-    {
-      "name" : "",
-      "years" : "",
-      "actual" : false
-    }
-  ],
-  "works" : [
-    {
-      "name" : "",
-      "poste" : "",
-      "intervale" : {
-        "start" : "",
-        "end" : ""
-      }
-    },{
-      "name" : "",
-      "poste" : "",
-      "intervale" : {
-        "start" : "",
-        "end" : ""
-      }
-    }
-  ],
   "photo" : ""
 }

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Works;
+use App\Entity\Work;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Works>
+ * @extends ServiceEntityRepository<Work>
  *
- * @method Works|null find($id, $lockMode = null, $lockVersion = null)
- * @method Works|null findOneBy(array $criteria, array $orderBy = null)
- * @method Works[]    findAll()
- * @method Works[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Work|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Work|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Work[]    findAll()
+ * @method Work[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class WorksRepository extends ServiceEntityRepository
+class WorkRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Works::class);
+        parent::__construct($registry, Work::class);
     }
 
-    public function add(Works $entity, bool $flush = false): void
+    public function add(Work $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class WorksRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Works $entity, bool $flush = false): void
+    public function remove(Work $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class WorksRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Works[] Returns an array of Works objects
+//     * @return Work[] Returns an array of Work objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class WorksRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Works
+//    public function findOneBySomeField($value): ?Work
 //    {
 //        return $this->createQueryBuilder('w')
 //            ->andWhere('w.exampleField = :val')

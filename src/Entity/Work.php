@@ -3,13 +3,13 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\WorksRepository;
+use App\Repository\WorkRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: WorksRepository::class)]
+#[ORM\Entity(repositoryClass: WorkRepository::class)]
 #[ApiResource]
-class Works
+class Work
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,10 +17,10 @@ class Works
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $place = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $work = null;
+    private ?string $place = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $start = null;
@@ -33,6 +33,18 @@ class Works
         return $this->id;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getPlace(): ?string
     {
         return $this->place;
@@ -41,18 +53,6 @@ class Works
     public function setPlace(string $place): self
     {
         $this->place = $place;
-
-        return $this;
-    }
-
-    public function getWork(): ?string
-    {
-        return $this->work;
-    }
-
-    public function setWork(string $work): self
-    {
-        $this->work = $work;
 
         return $this;
     }
