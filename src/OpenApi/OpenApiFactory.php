@@ -94,6 +94,7 @@ class OpenApiFactory implements OpenApiFactoryInterface
         );
 
         $openApi->getPaths()->addPath('/api/login',$pathItem);
+
         $schemas = $openApi->getComponents()->getSecuritySchemes();
 
         $schemas['JWT'] = new \ArrayObject([
