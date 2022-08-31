@@ -2,20 +2,13 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\PostPersonalDataController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\String\Slugger\AsciiSlugger;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\String\UnicodeString;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Vich\UploaderBundle\Mapping\PropertyMapping;
-use Vich\UploaderBundle\Naming\OrignameNamer;
-use Vich\UploaderBundle\Naming\SlugNamer;
-use Vich\UploaderBundle\Util\Transliterator;
 
 #[ApiResource(
     collectionOperations: [
@@ -23,6 +16,37 @@ use Vich\UploaderBundle\Util\Transliterator;
             'path' => 'personal_data'
         ],
         'post' => [
+            'security' => 'is_granted(\'ROLE_USER\')',
+            'openapi_context' => [
+                'security' => [['JWT' => []]],
+                'requestBody' => [
+                    'content' => [
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'name' => [
+                                        'type' => 'string',
+                                    ],
+                                    'description' => [
+                                        'type' => 'string',
+                                    ],
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'responses' => [
+                    '201' => [
+                        'description' => 'Données personels mise a jour',
+                        'content' => [],
+                    ]
+                ]
+            ],
             'path' => 'personal_data',
             'controller' => PostPersonalDataController::class,
             'deserialize' => false,
@@ -109,41 +133,43 @@ class PersonalData
     }
 
     public function set(string $key, mixed $value) {
-        if (property_exists($this, $key)) {
-            if ($key === 'file') {
-                $path = 'images/personal/';
-                $previousElement = scandir($path);
-                foreach ($previousElement as $item) {
-                    if ($item != '.' && $item != '..') {
-                        unlink($path.$item);
+        if (!empty($value)) {
+            if (property_exists($this, $key)) {
+                if ($key === 'file' && $value instanceof File) {
+                    $path = 'images/personal/';
+                    $previousElement = scandir($path);
+                    foreach ($previousElement as $item) {
+                        if ($item != '.' && $item != '..') {
+                            unlink($path.$item);
+                        }
                     }
-                }
-                /**
-                 * @var UploadedFile $value
-                 */
-                $newName = (
-                    uniqid().
-                    '_'.
-                    (
-                        new UnicodeString(
-                            substr(
-                                $value->getClientOriginalName(),
-                                0,
-                                strpos(
+                    /**
+                     * @var UploadedFile $value
+                     */
+                    $newName = (
+                        uniqid().
+                        '_'.
+                        (
+                            new UnicodeString(
+                                substr(
                                     $value->getClientOriginalName(),
-                                    '.'
-                                ) - strlen($value->getClientOriginalName())
+                                    0,
+                                    strpos(
+                                        $value->getClientOriginalName(),
+                                        '.'
+                                    ) - strlen($value->getClientOriginalName())
+                                )
                             )
-                        )
-                    )->camel()->lower().
-                    '.'.
-                    $value->getClientOriginalExtension()
-                );
+                        )->camel()->lower().
+                        '.'.
+                        $value->getClientOriginalExtension()
+                    );
 
-                move_uploaded_file($value,$path.$newName);
-                $this->setPhoto($newName);
-            } else {
-                $this->{$key} = $value;
+                    move_uploaded_file($value,$path.$newName);
+                    $this->setPhoto($newName);
+                } else {
+                    $this->{$key} = $value;
+                }
             }
         }
     }

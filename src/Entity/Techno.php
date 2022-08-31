@@ -82,7 +82,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                             ]
                         ]
                     ]
-                ]
+                ],
             ],
             'controller' => PostTechnoController::class,
         ],

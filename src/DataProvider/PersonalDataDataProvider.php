@@ -10,7 +10,7 @@ use App\Repository\PersonalDataRepository;
 class PersonalDataDataProvider implements RestrictedDataProviderInterface, CollectionDataProviderInterface
 {
 
-    public function __construct(private PersonalDataRepository $repository)
+    public function __construct(private $rootpath,private PersonalDataRepository $repository)
     {
     }
 
@@ -22,6 +22,7 @@ class PersonalDataDataProvider implements RestrictedDataProviderInterface, Colle
     public function getCollection(string $resourceClass, string $operationName = null)
     {
         $personalData = $this->repository->getData();
+        $personalData->setPhoto(base64_encode(file_get_contents($this->rootpath.'/public/images/personal/'.$personalData->getPhoto())));
         return [$personalData->toArray()];
     }
 }
