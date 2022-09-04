@@ -26,8 +26,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             'pagination_enabled' => false,
             'normalization_context' => ['groups' => ['read:techno:collection']],
             'openapi_context' => [
+                'summary' => 'Return a collection of Technology',
+                'description' => 'Return a collection of Technology',
                 'responses' => [
                     '200' => [
+                        'description' => 'Ok',
                         'content' => [
                             'application/json' => [
                                 'type' => 'array',
@@ -69,20 +72,25 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                 'type' => 'object',
                                 'properties' => [
                                     'name' => [
-                                        'type' => 'string'
+                                        'type' => 'string',
                                     ],
                                     'time' => [
-                                        'integer'
+                                        'integer',
                                     ],
                                     'image' => [
                                         'type' => 'string',
-                                        'format' => 'binary'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                        'format' => 'binary',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
+                'responses' => [
+                    '201' => [
+                        'description' => 'Resource created',
+                    ]
+                ]
             ],
             'controller' => PostTechnoController::class,
         ],
